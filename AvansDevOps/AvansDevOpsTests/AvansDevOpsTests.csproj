@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net4.7.2</TargetFramework>
-
+    <VSTestLogger>trx</VSTestLogger>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
