@@ -3,7 +3,7 @@ using Xunit;
 
 namespace AvansDevOpsTests
 {
-    public class UnitTest1
+    public class ProjectTests
     {
         [Fact]
         public void Test1()
