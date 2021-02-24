@@ -4,14 +4,14 @@ name: 'SonarQube Analysis'
     branches:
       - master
 jobs:
-  sonarQubeTrigger:
-    name: SonarQube Trigger
+  sonarqube:
+    name: SonarQube
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: SonarQube Scan
-        uses: kitabisa/sonarqube-action@master
+      - uses: philips-software/sonar-scanner-action@<version>
         with:
-          host: '${{ secrets.SONARQUBE_HOST }}'
-          login: '${{ secrets.SONARQUBE_TOKEN }}'
-          projectKey: BvR-TS-AvansDevOps
+          token: ${{ secrets.SONARQUBE_TOKEN }}
+          projectName: My Project Name
+          projectKey: 'BvR-TS-AvansDevOps'
+          url: '${{ secrets.SONARQUBE_HOST }}'
+          isCommunityEdition: true
