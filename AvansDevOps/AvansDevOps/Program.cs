@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 
 namespace AvansDevOps
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Hello Worlasdd!");
+
+        }
+
+        public static string HelloWorld()
+        {
+            return "Hello World";
         }
     }
 }
