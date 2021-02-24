@@ -14,5 +14,5 @@ jobs:
           projectName: My Project Name
           projectKey: 'BvR-TS-AvansDevOps'
           url: '${{ secrets.SONARQUBE_HOST }}'
-          baseDir: .
+          baseDir: /AvansDevOps/
           isCommunityEdition: true
