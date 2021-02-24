@@ -45,7 +45,14 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"basvanrooten_avansdevops" /o:"bvr-ts-avansdevops" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.xunit.reportsPaths="**"
-          MSBuild /t:rebuild ./AvansDevOps/
-          dotnet test .\AvansDevOps\ -r output
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"basvanrooten_avansdevops" /o:"bvr-ts-avansdevops" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="D:\a\avansdevops\avansdevops\output\*.trx" /d:sonar.cs.vscoveragexml.reportsPaths="D:\a\avansdevops\avansdevops\output\**\*.coveragexml"
+          MSBuild /t:rebuild ./AvansDevOps/AvansDevOps/
+          dotnet restore .\AvansDevOps\AvansDevOpsTests
+          dotnet test .\AvansDevOps\AvansDevOpsTests -r output --collect "Code Coverage"
+          Get-ChildItem -Recurse -Filter "*.coverage" | % {
+          $outfile = "$([System.IO.Path]::GetFileNameWithoutExtension($_.FullName)).coveragexml"
+          $output = [System.IO.Path]::Combine([System.IO.Path]::GetDirectoryName($_.FullName), $outfile)
+          "Analyse '$($_.Name)' with output '$outfile'..."
+          . "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Team Tools\Dynamic Code Coverage Tools\codecoverage.exe" analyze /output:$output $_.FullName
+          }
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
