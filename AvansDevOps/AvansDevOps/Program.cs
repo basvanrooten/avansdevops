@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AvansDevOps
 {
-    public class Program
+    public static class Program
     {
         static void Main(string[] args)
         {
