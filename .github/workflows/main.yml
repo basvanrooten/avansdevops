@@ -8,7 +8,7 @@ jobs:
     name: SonarQube
     runs-on: ubuntu-latest
     steps:
-      - uses: philips-software/sonar-scanner-action@<version>
+      - uses: philips-software/sonar-scanner-action@v1.2.0
         with:
           token: ${{ secrets.SONARQUBE_TOKEN }}
           projectName: My Project Name
