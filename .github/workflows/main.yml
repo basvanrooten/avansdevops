@@ -47,6 +47,6 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"basvanrooten_avansdevops" /o:"bvr-ts-avansdevops" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.xunit.reportsPaths="D:\a\avansdevops\avansdevops\output\*"
           MSBuild /t:rebuild ./AvansDevOps/
-          dotnet restore
+          dotnet restore .\AvansDevOps\
           dotnet test .\AvansDevOps\ -r output
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
