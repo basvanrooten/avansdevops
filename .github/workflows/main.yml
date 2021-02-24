@@ -17,7 +17,7 @@ jobs:
         testCommand: dotnet test .
         projectKey: BvR-TS-AvansDevOps
         projectName: BvR-TS-AvansDevOps
-        sonarOrganisation: BvR-TS-AvansDevOps
+        sonarOrganisation: an-org
         sonarHostname: 'https://sonarqube.avans-informatica-breda.nl/'
         beginArguments: >
             /d:sonar.verbose="true"
