@@ -42,6 +42,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"BvR-TS-AvansDevOps" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarqube.avans-informatica-breda.nl"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"BvR-TS-AvansDevOps" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarqube.avans-informatica-breda.nl"  /d:sonar.verbose=true
           dotnet build ./AvansDevOps/AvansDevOps.sln --force
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
