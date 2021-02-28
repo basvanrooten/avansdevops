@@ -7,14 +7,15 @@ using AvansDevOps.Persons;
 
 namespace AvansDevOps.Sprints.SprintStates
 {
-    public class InitializedState : ISprintState
+    public class ActiveState : ISprintState
     {
-        private ISprint _sprint;
+        private readonly ISprint _sprint;
 
-        public InitializedState(ISprint sprint)
+        public ActiveState(ISprint sprint)
         {
             this._sprint = sprint;
         }
+
         public void SetSprint(ISprint sprint)
         {
             throw new NotImplementedException();
@@ -22,22 +23,22 @@ namespace AvansDevOps.Sprints.SprintStates
 
         public void SetName(string name)
         {
-            this._sprint.SetName(name);
+            throw new NotSupportedException("Can't change name when sprint is active");
         }
 
         public void SetReview()
         {
-            throw new NotSupportedException("Can't add a review in Initialized State");
+            throw new NotSupportedException("Can't add a review when sprint is active.");
         }
 
         public void SetStartDate(DateTime startDate)
         {
-            this._sprint.SetStartDate(startDate);
+            throw new NotSupportedException("Can't change startDate when sprint is active");
         }
 
         public void SetEndDate(DateTime endDate)
         {
-            this._sprint.SetEndDate(endDate);
+            throw new NotSupportedException("Can't change endDate when sprint is active");
         }
 
         public void AddDeveloper(Person developer)
@@ -47,7 +48,8 @@ namespace AvansDevOps.Sprints.SprintStates
 
         public void AddToSprintBacklog()
         {
-            throw new NotImplementedException();
+            // Probably we should allow this since this can happen in practice a lot.
+            throw new NotSupportedException("Can't add to sprint backlog when sprint is active");
         }
 
         public void startStateAction()
@@ -57,13 +59,12 @@ namespace AvansDevOps.Sprints.SprintStates
 
         public void ToNextState()
         {
-            this._sprint.ChangeState(new ActiveState(_sprint));
-                
+            throw new NotImplementedException();
         }
 
         public void ToPreviousState()
         {
-            throw new NotSupportedException("There is no previous state for initialized");
+            throw new NotSupportedException("Can't go back to ActiveState");
         }
     }
 }

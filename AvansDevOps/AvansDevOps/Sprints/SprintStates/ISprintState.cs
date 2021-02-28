@@ -19,6 +19,8 @@ namespace AvansDevOps.Sprints.SprintStates
         // TODO: Add backlog items to sprint
         void AddToSprintBacklog();
         void startStateAction();
+        void ToNextState();
+        void ToPreviousState();
 
     }
 }

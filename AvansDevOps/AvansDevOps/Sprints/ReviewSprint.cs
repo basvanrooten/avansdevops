@@ -36,7 +36,7 @@ namespace AvansDevOps.Sprints
 
         public void ChangeState(ISprintState state)
         {
-            throw new NotImplementedException();
+            this.state = state;
         }
 
         public ISprintState GetState()

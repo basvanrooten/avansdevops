@@ -12,7 +12,6 @@ namespace AvansDevOps.Sprints
     {
         void ChangeState(ISprintState state);
         ISprintState GetState();
-
         Person GetScrumMaster();
         List<Person> GetDevelopers();
         void AddDeveloper(Person person);
