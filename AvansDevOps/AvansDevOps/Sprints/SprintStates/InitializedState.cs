@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AvansDevOps.Persons;
+using AvansDevOps.Reviews;
 
 namespace AvansDevOps.Sprints.SprintStates
 {
@@ -21,7 +22,7 @@ namespace AvansDevOps.Sprints.SprintStates
             this._sprint.SetName(name);
         }
 
-        public void SetReview()
+        public void SetReview(Review review)
         {
             throw new NotSupportedException("Can't add a review in Initialized State");
         }

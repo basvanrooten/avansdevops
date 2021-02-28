@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AvansDevOps.Persons;
+using AvansDevOps.Reviews;
 using AvansDevOps.Sprints.SprintStates;
 
 namespace AvansDevOps.Sprints
@@ -13,35 +14,35 @@ namespace AvansDevOps.Sprints
         private string _name;
         private DateTime _startDate;
         private DateTime _endDate;
-        private ISprintState state;
-        private readonly Project project;
-        private readonly Person scrumMaster;
-        private readonly List<Person> developers;
-        
+        private ISprintState _state;
+        private readonly Project _project;
+        private readonly Person _scrumMaster;
+        private readonly List<Person> _developers;
+
         //TODO
         //private List<BacklogItem> sprintBacklogItems;
-        //private Review review;
+        private Review _review;
 
         public ReviewSprint(string name, DateTime startDate, DateTime endDate, Project project, Person scrumMaster, List<Person> developers)
         {
             this._name = name;
             this._startDate = startDate;
             this._endDate = endDate;
-            this.project = project;
-            this.scrumMaster = scrumMaster;
-            this.developers = developers;
-            this.state = new InitializedState(this);
+            this._project = project;
+            this._scrumMaster = scrumMaster;
+            this._developers = developers;
+            this._state = new InitializedState(this);
 
         }
 
         public void ChangeState(ISprintState state)
         {
-            this.state = state;
+            this._state = state;
         }
 
         public ISprintState GetState()
         {
-            return this.state;
+            return this._state;
         }
 
         public void GenerateReport()
@@ -52,17 +53,27 @@ namespace AvansDevOps.Sprints
 
         public List<Person> GetDevelopers()
         {
-            return developers;
+            return _developers;
         }
 
         public void AddDeveloper(Person developer)
         {
-            this.developers.Add(developer);
+            this._developers.Add(developer);
         }
 
         public DateTime GetEndDate()
         {
             return _endDate;
+        }
+
+        public Review GetReview()
+        {
+            return this._review;
+        }
+
+        public void SetReview(Review review)
+        {
+            this._review = review;
         }
 
         public string GetName()
@@ -72,12 +83,12 @@ namespace AvansDevOps.Sprints
 
         public Project GetProject()
         {
-            return project;
+            return _project;
         }
 
         public Person GetScrumMaster()
         {
-            return scrumMaster;
+            return _scrumMaster;
         }
 
         public DateTime GetStartDate()

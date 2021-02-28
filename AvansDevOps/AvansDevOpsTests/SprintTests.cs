@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using AvansDevOps;
 using AvansDevOps.Persons;
+using AvansDevOps.Reviews;
 using AvansDevOps.Sprints;
 using Xunit;
 
@@ -131,10 +133,12 @@ namespace AvansDevOpsTests
 
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
+
+            Review review = new Review(sprint, p1, "No good");
             // Act
 
             // Assert
-            Assert.Throws<NotSupportedException>(() => project.GetSprints().First().GetState().SetReview());
+            Assert.Throws<NotSupportedException>(() => project.GetSprints().First().GetState().SetReview(review));
 
         }
 
@@ -297,10 +301,12 @@ namespace AvansDevOpsTests
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
             sprint.GetState().ToNextState();
+            Review review = new Review(sprint, p1, "No good");
+
             // Act
 
             // Assert
-            Assert.Throws<NotSupportedException>(() => project.GetSprints().First().GetState().SetReview());
+            Assert.Throws<NotSupportedException>(() => project.GetSprints().First().GetState().SetReview(review));
 
         }
 
@@ -327,5 +333,185 @@ namespace AvansDevOpsTests
             Assert.Equal("InitializedState", project.GetSprints().First().GetState().GetType().Name);
 
         }
+    }
+
+    public partial class Sprint_FinishedState_Tests
+    {
+
+        /***
+         *      ______ _       _     _              _    _____ _        _         _______        _       
+         *     |  ____(_)     (_)   | |            | |  / ____| |      | |       |__   __|      | |      
+         *     | |__   _ _ __  _ ___| |__   ___  __| | | (___ | |_ __ _| |_ ___     | | ___  ___| |_ ___ 
+         *     |  __| | | '_ \| / __| '_ \ / _ \/ _` |  \___ \| __/ _` | __/ _ \    | |/ _ \/ __| __/ __|
+         *     | |    | | | | | \__ \ | | |  __/ (_| |  ____) | || (_| | ||  __/    | |  __/\__ \ |_\__ \
+         *     |_|    |_|_| |_|_|___/_| |_|\___|\__,_| |_____/ \__\__,_|\__\___|    |_|\___||___/\__|___/
+         *                                                                                               
+         *                                                                                               
+         */
+
+        [Fact]
+        public void Changing_SprintName_Should_Throw_NotSupportedException_In_ActiveState()
+        {
+            // Arrange
+
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
+
+            ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+            sprint.GetState().ToNextState();
+            // Act
+            // Assert
+            Assert.Throws<NotSupportedException>(() => project.GetSprints().First().GetState().SetName("Foo"));
+
+        }
+
+        [Fact]
+        public void Changing_StartDate_Should_Throw_NotSupportedException_In_ActiveState()
+        {
+            // Arrange
+
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
+
+            ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+            sprint.GetState().ToNextState();
+            // Act
+
+            // Assert
+            Assert.Throws<NotSupportedException>(() => project.GetSprints().First().GetState().SetStartDate(DateTime.Parse("2010-10-10T00:00:00Z")));
+
+        }
+
+        [Fact]
+        public void Changing_EndDate_Should_Throw_NotSupportedException_In_FinishedState()
+        {
+            // Arrange
+
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
+
+            ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Parse("2010-10-10T00:00:00Z"), DateTime.Parse("2010-10-10T00:00:00Z").AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+            sprint.GetState().ToNextState();
+            sprint.GetState().ToNextState();
+            // Act
+
+            // Assert
+            Assert.Throws<NotSupportedException>(() => project.GetSprints().First().GetState().SetEndDate(DateTime.Parse("2010-10-17T00:00:00Z")));
+
+        }
+
+        [Fact]
+        public void Adding_Developer_Should_Throw_NotSupportedException_In_FinishedState()
+        {
+            // Arrange
+
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
+            Person p3 = new Person("Dick Bruna", ERole.Developer);
+
+            ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Parse("2010-10-10T00:00:00Z"), DateTime.Parse("2010-10-10T00:00:00Z").AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+            sprint.GetState().ToNextState();
+            sprint.GetState().ToNextState();
+
+            // Act
+
+            // Assert
+            Assert.Throws<NotSupportedException>(() => project.GetSprints().First().GetState().AddDeveloper(p3));
+            Assert.DoesNotContain(p3, sprint.GetDevelopers());
+
+        }
+
+        [Fact]
+        public void Set_Review_Should_Not_Throw_Exception_In_FinishedState_When_Added_By_ScrumMaster()
+        {
+            // Arrange
+
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
+
+            ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+            sprint.GetState().ToNextState();
+            sprint.GetState().ToNextState();
+
+            Review review = new Review(sprint, p1, "Good work guys!");
+
+            // Act
+            sprint.GetState().SetReview(review);
+
+
+            // Assert
+            Assert.Equal(review, sprint.GetReview());
+
+        }
+
+        [Fact]
+        public void Set_Review_Should_Throw_SecurityException_In_FinishedState_When_Added_By_Someone_Else_But_ScrumMaster()
+        {
+            // Arrange
+
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
+
+            ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+            sprint.GetState().ToNextState();
+            sprint.GetState().ToNextState();
+
+            Review review = new Review(sprint, p2, "Good work guys!");
+
+            // Act
+
+            // Assert
+            Assert.Throws<SecurityException>(() => project.GetSprints().First().GetState().SetReview(review));
+
+        }
+
+        [Fact]
+        public void Changing_To_Previous_State_Should_Not_Throw_Exception_In_ActiveState()
+        {
+            // Arrange
+
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
+
+            ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+            sprint.GetState().ToNextState();
+
+            // Act
+            project.GetSprints().First().GetState().ToPreviousState();
+
+
+            // Assert
+            Assert.Equal("InitializedState", project.GetSprints().First().GetState().GetType().Name);
+
+        }
+
     }
 }
