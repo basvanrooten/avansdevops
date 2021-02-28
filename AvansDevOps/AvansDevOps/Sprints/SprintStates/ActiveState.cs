@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AvansDevOps.Persons;
+using AvansDevOps.Reviews;
 
 namespace AvansDevOps.Sprints.SprintStates
 {
@@ -21,7 +22,7 @@ namespace AvansDevOps.Sprints.SprintStates
             throw new NotSupportedException("Can't change name when sprint is active");
         }
 
-        public void SetReview()
+        public void SetReview(Review review)
         {
             throw new NotSupportedException("Can't add a review when sprint is active.");
         }
@@ -54,7 +55,7 @@ namespace AvansDevOps.Sprints.SprintStates
 
         public void ToNextState()
         {
-            throw new NotImplementedException();
+            this._sprint.ChangeState(new FinishedState(_sprint));
         }
 
         public void ToPreviousState()
