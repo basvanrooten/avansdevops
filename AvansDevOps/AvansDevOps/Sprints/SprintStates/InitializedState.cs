@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AvansDevOps.Persons;
 
 namespace AvansDevOps.Sprints.SprintStates
 {
@@ -37,6 +38,11 @@ namespace AvansDevOps.Sprints.SprintStates
         public void SetEndDate(DateTime endDate)
         {
             this.sprint.SetEndDate(endDate);
+        }
+
+        public void AddDeveloper(Person developer)
+        {
+            this.sprint.AddDeveloper(developer);
         }
 
         public void AddToSprintBacklog()

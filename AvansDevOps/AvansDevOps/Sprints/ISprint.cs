@@ -15,6 +15,7 @@ namespace AvansDevOps.Sprints
 
         Person GetScrumMaster();
         List<Person> GetDevelopers();
+        void AddDeveloper(Person person);
         Project GetProject();
         string GetName();
         void SetName(string name);

@@ -14,9 +14,9 @@ namespace AvansDevOps.Sprints
         private DateTime _startDate;
         private DateTime _endDate;
         private ISprintState state;
-        private Project project;
-        private Person scrumMaster;
-        private List<Person> developers;
+        private readonly Project project;
+        private readonly Person scrumMaster;
+        private readonly List<Person> developers;
         
         //TODO
         //private List<BacklogItem> sprintBacklogItems;
@@ -53,6 +53,11 @@ namespace AvansDevOps.Sprints
         public List<Person> GetDevelopers()
         {
             return developers;
+        }
+
+        public void AddDeveloper(Person developer)
+        {
+            this.developers.Add(developer);
         }
 
         public DateTime GetEndDate()

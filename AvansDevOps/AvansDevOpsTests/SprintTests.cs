@@ -79,6 +79,30 @@ namespace AvansDevOpsTests
         }
 
         [Fact]
+        public void Adding_Developer_Should_Not_Throw_Exception_In_InitializedState()
+        {
+            // Arrange
+
+            Project project = new Project("Test Project", new Person("Bas"));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom");
+            Person p2 = new Person("Jan Peter");
+            Person p3 = new Person("Dick Bruna");
+
+            ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Parse("2010-10-10T00:00:00Z"), DateTime.Parse("2010-10-10T00:00:00Z").AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+            
+            // Act
+            sprint.GetState().AddDeveloper(p3);
+
+
+            // Assert
+            Assert.Contains(p3, sprint.GetDevelopers());
+
+        }
+
+        [Fact]
         public void Set_Review_Should_Throw_NotSupportedException_In_InitializedState()
         {
             // Arrange
