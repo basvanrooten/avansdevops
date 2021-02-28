@@ -16,11 +16,6 @@ namespace AvansDevOps.Sprints.SprintStates
             this._sprint = sprint;
         }
 
-        public void SetSprint(ISprint sprint)
-        {
-            throw new NotImplementedException();
-        }
-
         public void SetName(string name)
         {
             throw new NotSupportedException("Can't change name when sprint is active");
@@ -64,7 +59,7 @@ namespace AvansDevOps.Sprints.SprintStates
 
         public void ToPreviousState()
         {
-            throw new NotSupportedException("Can't go back to ActiveState");
+            this._sprint.ChangeState(new InitializedState(_sprint));
         }
     }
 }

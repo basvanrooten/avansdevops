@@ -9,7 +9,6 @@ namespace AvansDevOps.Sprints.SprintStates
 {
     public interface ISprintState
     {
-        void SetSprint(ISprint sprint);
         void SetName(string name);
         // TODO: SET REVIEW
         void SetReview();

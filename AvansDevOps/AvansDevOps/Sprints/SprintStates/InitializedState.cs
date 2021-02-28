@@ -9,15 +9,11 @@ namespace AvansDevOps.Sprints.SprintStates
 {
     public class InitializedState : ISprintState
     {
-        private ISprint _sprint;
+        private readonly ISprint _sprint;
 
         public InitializedState(ISprint sprint)
         {
             this._sprint = sprint;
-        }
-        public void SetSprint(ISprint sprint)
-        {
-            throw new NotImplementedException();
         }
 
         public void SetName(string name)

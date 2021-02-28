@@ -133,6 +133,49 @@ namespace AvansDevOpsTests
 
         }
 
+        [Fact]
+        public void Changing_To_Next_State_Should_Not_Throw_Exception_In_InitializedState()
+        {
+            // Arrange
+
+            Project project = new Project("Test Project", new Person("Bas"));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom");
+            Person p2 = new Person("Jan Peter");
+
+            ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+
+            // Act
+            project.GetSprints().First().GetState().ToNextState();
+
+
+            // Assert
+            Assert.Equal("ActiveState", project.GetSprints().First().GetState().GetType().Name);
+
+        }
+
+        [Fact]
+        public void Changing_To_Previous_State_Should_Throw_NotSupportedException_In_InitializedState()
+        {
+            // Arrange
+
+            Project project = new Project("Test Project", new Person("Bas"));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom");
+            Person p2 = new Person("Jan Peter");
+
+            ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+            // Act
+
+            // Assert
+            Assert.Throws<NotSupportedException>(() => project.GetSprints().First().GetState().ToPreviousState());
+
+        }
+
 
         /***
          *                   _   _              _____ _        _         _______        _       
@@ -250,6 +293,30 @@ namespace AvansDevOpsTests
 
             // Assert
             Assert.Throws<NotSupportedException>(() => project.GetSprints().First().GetState().SetReview());
+
+        }
+
+        [Fact]
+        public void Changing_To_Previous_State_Should_Not_Throw_Exception_In_ActiveState()
+        {
+            // Arrange
+
+            Project project = new Project("Test Project", new Person("Bas"));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom");
+            Person p2 = new Person("Jan Peter");
+
+            ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+            sprint.GetState().ToNextState();
+
+            // Act
+            project.GetSprints().First().GetState().ToPreviousState();
+
+
+            // Assert
+            Assert.Equal("InitializedState", project.GetSprints().First().GetState().GetType().Name);
 
         }
 
