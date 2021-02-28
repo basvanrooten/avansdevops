@@ -45,7 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Channels\ChannelFactory.cs" />
+    <Compile Include="Channels\EmailAdaptee.cs" />
+    <Compile Include="Channels\EmailChannel.cs" />
     <Compile Include="Channels\IChannel.cs" />
+    <Compile Include="Channels\SlackAdaptee.cs" />
+    <Compile Include="Channels\SlackChannel.cs" />
     <Compile Include="Persons\ERole.cs" />
     <Compile Include="Persons\Person.cs" />
     <Compile Include="Program.cs" />
