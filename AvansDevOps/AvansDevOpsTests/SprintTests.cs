@@ -490,7 +490,7 @@ namespace AvansDevOpsTests
         }
 
         [Fact]
-        public void Changing_To_Previous_State_Should_Not_Throw_Exception_In_ActiveState()
+        public void Changing_To_Previous_State_Should_Not_Throw_Exception_In_FinishedState()
         {
             // Arrange
 
@@ -503,13 +503,14 @@ namespace AvansDevOpsTests
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
             sprint.GetState().ToNextState();
+            sprint.GetState().ToNextState();
 
             // Act
             project.GetSprints().First().GetState().ToPreviousState();
 
 
             // Assert
-            Assert.Equal("InitializedState", project.GetSprints().First().GetState().GetType().Name);
+            Assert.Equal("ActiveState", project.GetSprints().First().GetState().GetType().Name);
 
         }
 
