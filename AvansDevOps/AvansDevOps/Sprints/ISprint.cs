@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AvansDevOps.Persons;
+using AvansDevOps.Reviews;
 using AvansDevOps.Sprints.SprintStates;
 
 namespace AvansDevOps.Sprints
@@ -21,6 +22,8 @@ namespace AvansDevOps.Sprints
         DateTime GetStartDate();
         void SetStartDate(DateTime startDate);
         DateTime GetEndDate();
+        void SetReview(Review review);
+        Review GetReview();
         void SetEndDate(DateTime endDate);
         void GenerateReport();
     }

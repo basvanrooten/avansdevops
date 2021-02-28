@@ -51,10 +51,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reviews\Review.cs" />
     <Compile Include="Sprints\ISprint.cs" />
     <Compile Include="Sprints\ReviewSprint.cs" />
     <Compile Include="Sprints\SprintFactory.cs" />
     <Compile Include="Sprints\SprintStates\ActiveState.cs" />
+    <Compile Include="Sprints\SprintStates\FinishedState.cs" />
     <Compile Include="Sprints\SprintStates\InitializedState.cs" />
     <Compile Include="Sprints\SprintStates\ISprintState.cs" />
   </ItemGroup>
