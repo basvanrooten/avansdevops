@@ -10,6 +10,11 @@ namespace AvansDevOpsTests
 {
     public class SprintTests
     {
+
+
+    }
+
+    public partial class Sprint_InitializedState_Tests {
         /***
         *      _____       _ _      _____ _        _         _______        _       
         *     |_   _|     (_) |    / ____| |      | |       |__   __|      | |      
@@ -32,7 +37,7 @@ namespace AvansDevOpsTests
             Person p1 = new Person("Tom", ERole.Developer);
             Person p2 = new Person("Jan Peter", ERole.Tester);
 
-            ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project,  p1, new List<Person>() { p2 });
+            ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
             // Act
 
@@ -103,7 +108,7 @@ namespace AvansDevOpsTests
 
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Parse("2010-10-10T00:00:00Z"), DateTime.Parse("2010-10-10T00:00:00Z").AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
-            
+
             // Act
             sprint.GetState().AddDeveloper(p3);
 
@@ -175,7 +180,10 @@ namespace AvansDevOpsTests
             Assert.Throws<NotSupportedException>(() => project.GetSprints().First().GetState().ToPreviousState());
 
         }
+    }
 
+    public partial class Sprint_ActiveState_Tests
+    {
 
         /***
          *                   _   _              _____ _        _         _______        _       
@@ -319,6 +327,5 @@ namespace AvansDevOpsTests
             Assert.Equal("InitializedState", project.GetSprints().First().GetState().GetType().Name);
 
         }
-
     }
 }
