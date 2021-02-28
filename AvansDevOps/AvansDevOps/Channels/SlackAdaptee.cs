@@ -17,6 +17,7 @@ namespace AvansDevOps.Channels
 
         public void SendMessage(string message)
         {
+            //TODO: Figure out a way to test this.
             Console.WriteLine($"Slack message has been sent to: {this._username} Message: {message}");
         }
     }

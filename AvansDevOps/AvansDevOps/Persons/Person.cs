@@ -34,6 +34,11 @@ namespace AvansDevOps.Persons
             this._channels.Add(channel);
         }
 
+        public List<IChannel> GetChannels()
+        {
+            return this._channels;
+        }
+
         public ERole GetRole()
         {
             return this._role;
