@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Channels\IChannel.cs" />
+    <Compile Include="Persons\ERole.cs" />
     <Compile Include="Persons\Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Project.cs" />

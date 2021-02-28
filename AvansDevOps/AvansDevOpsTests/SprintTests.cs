@@ -26,11 +26,11 @@ namespace AvansDevOpsTests
         {
             // Arrange
 
-            Project project = new Project("Test Project", new Person("Bas"));
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
             SprintFactory factory = new SprintFactory();
 
-            Person p1 = new Person("Tom");
-            Person p2 = new Person("Jan Peter");
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
 
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project,  p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
@@ -48,11 +48,11 @@ namespace AvansDevOpsTests
         {
             // Arrange
 
-            Project project = new Project("Test Project", new Person("Bas"));
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
             SprintFactory factory = new SprintFactory();
 
-            Person p1 = new Person("Tom");
-            Person p2 = new Person("Jan Peter");
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
 
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
@@ -71,11 +71,11 @@ namespace AvansDevOpsTests
         {
             // Arrange
 
-            Project project = new Project("Test Project", new Person("Bas"));
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
             SprintFactory factory = new SprintFactory();
 
-            Person p1 = new Person("Tom");
-            Person p2 = new Person("Jan Peter");
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
 
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Parse("2010-10-10T00:00:00Z"), DateTime.Parse("2010-10-10T00:00:00Z").AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
@@ -94,12 +94,12 @@ namespace AvansDevOpsTests
         {
             // Arrange
 
-            Project project = new Project("Test Project", new Person("Bas"));
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
             SprintFactory factory = new SprintFactory();
 
-            Person p1 = new Person("Tom");
-            Person p2 = new Person("Jan Peter");
-            Person p3 = new Person("Dick Bruna");
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
+            Person p3 = new Person("Dick Bruna", ERole.Developer);
 
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Parse("2010-10-10T00:00:00Z"), DateTime.Parse("2010-10-10T00:00:00Z").AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
@@ -118,11 +118,11 @@ namespace AvansDevOpsTests
         {
             // Arrange
 
-            Project project = new Project("Test Project", new Person("Bas"));
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
             SprintFactory factory = new SprintFactory();
 
-            Person p1 = new Person("Tom");
-            Person p2 = new Person("Jan Peter");
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
 
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
@@ -138,11 +138,11 @@ namespace AvansDevOpsTests
         {
             // Arrange
 
-            Project project = new Project("Test Project", new Person("Bas"));
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
             SprintFactory factory = new SprintFactory();
 
-            Person p1 = new Person("Tom");
-            Person p2 = new Person("Jan Peter");
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
 
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
@@ -161,11 +161,11 @@ namespace AvansDevOpsTests
         {
             // Arrange
 
-            Project project = new Project("Test Project", new Person("Bas"));
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
             SprintFactory factory = new SprintFactory();
 
-            Person p1 = new Person("Tom");
-            Person p2 = new Person("Jan Peter");
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
 
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
@@ -193,11 +193,11 @@ namespace AvansDevOpsTests
         {
             // Arrange
 
-            Project project = new Project("Test Project", new Person("Bas"));
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
             SprintFactory factory = new SprintFactory();
 
-            Person p1 = new Person("Tom");
-            Person p2 = new Person("Jan Peter");
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
 
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
@@ -213,11 +213,11 @@ namespace AvansDevOpsTests
         {
             // Arrange
 
-            Project project = new Project("Test Project", new Person("Bas"));
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
             SprintFactory factory = new SprintFactory();
 
-            Person p1 = new Person("Tom");
-            Person p2 = new Person("Jan Peter");
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
 
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
@@ -234,11 +234,11 @@ namespace AvansDevOpsTests
         {
             // Arrange
 
-            Project project = new Project("Test Project", new Person("Bas"));
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
             SprintFactory factory = new SprintFactory();
 
-            Person p1 = new Person("Tom");
-            Person p2 = new Person("Jan Peter");
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
 
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Parse("2010-10-10T00:00:00Z"), DateTime.Parse("2010-10-10T00:00:00Z").AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
@@ -255,12 +255,12 @@ namespace AvansDevOpsTests
         {
             // Arrange
 
-            Project project = new Project("Test Project", new Person("Bas"));
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
             SprintFactory factory = new SprintFactory();
 
-            Person p1 = new Person("Tom");
-            Person p2 = new Person("Jan Peter");
-            Person p3 = new Person("Dick Bruna");
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
+            Person p3 = new Person("Dick Bruna", ERole.Developer);
 
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Parse("2010-10-10T00:00:00Z"), DateTime.Parse("2010-10-10T00:00:00Z").AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
@@ -280,11 +280,11 @@ namespace AvansDevOpsTests
         {
             // Arrange
 
-            Project project = new Project("Test Project", new Person("Bas"));
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
             SprintFactory factory = new SprintFactory();
 
-            Person p1 = new Person("Tom");
-            Person p2 = new Person("Jan Peter");
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
 
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
@@ -301,11 +301,11 @@ namespace AvansDevOpsTests
         {
             // Arrange
 
-            Project project = new Project("Test Project", new Person("Bas"));
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
             SprintFactory factory = new SprintFactory();
 
-            Person p1 = new Person("Tom");
-            Person p2 = new Person("Jan Peter");
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
 
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
