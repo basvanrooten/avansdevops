@@ -9,7 +9,6 @@ namespace AvansDevOps.Reports
 {
     public interface IReportBuilder
     {
-        void Reset();
         void BuildFooter();
         void BuildHeader(ISprint sprint, string reportVersion, DateTime date);
         void BuildContent(List<string> contents);

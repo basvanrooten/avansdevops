@@ -9,14 +9,9 @@ namespace AvansDevOps.Reports.ReportBuilders
 {
     public class AvansPlusReportBuilder: IReportBuilder
     {
-        private Report _report;
+        private readonly Report _report;
 
         public AvansPlusReportBuilder()
-        {
-            this._report = new Report();
-        }
-
-        public void Reset()
         {
             this._report = new Report();
         }
