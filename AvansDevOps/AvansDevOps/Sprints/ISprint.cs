@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AvansDevOps.Persons;
+using AvansDevOps.Reports;
 using AvansDevOps.Reviews;
 using AvansDevOps.Sprints.SprintStates;
 
@@ -25,6 +26,6 @@ namespace AvansDevOps.Sprints
         void SetReview(Review review);
         Review GetReview();
         void SetEndDate(DateTime endDate);
-        void GenerateReport();
+        Report GenerateReport(EReportBranding branding, List<string> contents, string version, DateTime date, EReportFormat format);
     }
 }

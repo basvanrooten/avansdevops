@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AvansDevOps.Persons;
+using AvansDevOps.Reports;
 using AvansDevOps.Reviews;
 using AvansDevOps.Sprints.SprintStates;
 
@@ -109,6 +110,11 @@ namespace AvansDevOps.Sprints
         public void SetStartDate(DateTime startDate)
         {
             _startDate = startDate;
+        }
+
+        public Report GenerateReport(EReportBranding branding, List<string> contents, string version, DateTime date, EReportFormat format)
+        {
+            return branding == EReportBranding.Avans ? ReportDirector.BuildAvansReport(this, contents, version, date, format) : ReportDirector.BuildAvansPlusReport(this, contents, version, date, format);
         }
     }
 }
