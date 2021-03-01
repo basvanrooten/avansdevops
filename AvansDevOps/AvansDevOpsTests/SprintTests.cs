@@ -25,26 +25,44 @@ namespace AvansDevOpsTests
             Person p2 = new Person("Jan Peter", ERole.Tester);
 
             ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
+            ISprint sprint2 = factory.MakeReleaseSprint("Sprint 2", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
             project.AddSprint(sprint);
+            project.AddSprint(sprint2);
 
             // Act
             DateTime now = DateTime.Now;
-            Report generatedAvansReport = sprint.GenerateReport(EReportBranding.Avans, new List<string>() { "Burndown chart: foo", "Velocity: 21" }, "v1.0", now, EReportFormat.PDF);
-            Report generatedAvansPlusReport = sprint.GenerateReport(EReportBranding.AvansPlus, new List<string>() { "Burndown chart: bar", "Velocity: 13" }, "v2.0", now, EReportFormat.PNG);
+            Report sprint1GeneratedAvansReport = sprint.GenerateReport(EReportBranding.Avans, new List<string>() { "Burndown chart: foo", "Velocity: 21" }, "v1.0", now, EReportFormat.PDF);
+            Report sprint1GeneratedAvansPlusReport = sprint.GenerateReport(EReportBranding.AvansPlus, new List<string>() { "Burndown chart: bar", "Velocity: 13" }, "v2.0", now, EReportFormat.PNG);
+
+
+            Report sprint2GeneratedAvansReport = sprint.GenerateReport(EReportBranding.Avans, new List<string>() { "Burndown chart: foo", "Velocity: 21" }, "v1.0", now, EReportFormat.PDF);
+            Report sprint2GeneratedAvansPlusReport = sprint.GenerateReport(EReportBranding.AvansPlus, new List<string>() { "Burndown chart: bar", "Velocity: 13" }, "v2.0", now, EReportFormat.PNG);
 
 
             // Assert
-            Assert.Equal(now, generatedAvansReport.Header.Date);
-            Assert.Equal("Avans", generatedAvansReport.Header.CompanyName);
-            Assert.Equal(new List<string>() { "Burndown chart: foo", "Velocity: 21" }, generatedAvansReport.Contents);
-            Assert.Equal("v1.0", generatedAvansReport.Header.ReportVersion);
-            Assert.Equal(EReportFormat.PDF, generatedAvansReport.Format);
+            Assert.Equal(now, sprint1GeneratedAvansReport.Header.Date);
+            Assert.Equal("Avans", sprint1GeneratedAvansReport.Header.CompanyName);
+            Assert.Equal(new List<string>() { "Burndown chart: foo", "Velocity: 21" }, sprint1GeneratedAvansReport.Contents);
+            Assert.Equal("v1.0", sprint1GeneratedAvansReport.Header.ReportVersion);
+            Assert.Equal(EReportFormat.PDF, sprint1GeneratedAvansReport.Format);
 
-            Assert.Equal(now, generatedAvansPlusReport.Header.Date);
-            Assert.Equal("Avans+", generatedAvansPlusReport.Header.CompanyName);
-            Assert.Equal(new List<string>() { "Burndown chart: bar", "Velocity: 13" }, generatedAvansPlusReport.Contents);
-            Assert.Equal("v2.0", generatedAvansPlusReport.Header.ReportVersion);
-            Assert.Equal(EReportFormat.PNG, generatedAvansPlusReport.Format);
+            Assert.Equal(now, sprint1GeneratedAvansPlusReport.Header.Date);
+            Assert.Equal("Avans+", sprint1GeneratedAvansPlusReport.Header.CompanyName);
+            Assert.Equal(new List<string>() { "Burndown chart: bar", "Velocity: 13" }, sprint2GeneratedAvansPlusReport.Contents);
+            Assert.Equal("v2.0", sprint1GeneratedAvansPlusReport.Header.ReportVersion);
+            Assert.Equal(EReportFormat.PNG, sprint1GeneratedAvansPlusReport.Format);
+
+            Assert.Equal(now, sprint2GeneratedAvansReport.Header.Date);
+            Assert.Equal("Avans", sprint2GeneratedAvansReport.Header.CompanyName);
+            Assert.Equal(new List<string>() { "Burndown chart: foo", "Velocity: 21" }, sprint2GeneratedAvansReport.Contents);
+            Assert.Equal("v1.0", sprint2GeneratedAvansReport.Header.ReportVersion);
+            Assert.Equal(EReportFormat.PDF, sprint1GeneratedAvansReport.Format);
+
+            Assert.Equal(now, sprint2GeneratedAvansPlusReport.Header.Date);
+            Assert.Equal("Avans+", sprint2GeneratedAvansPlusReport.Header.CompanyName);
+            Assert.Equal(new List<string>() { "Burndown chart: bar", "Velocity: 13" }, sprint2GeneratedAvansPlusReport.Contents);
+            Assert.Equal("v2.0", sprint2GeneratedAvansPlusReport.Header.ReportVersion);
+            Assert.Equal(EReportFormat.PNG, sprint2GeneratedAvansPlusReport.Format);
         }
 
     }
