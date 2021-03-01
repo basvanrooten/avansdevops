@@ -46,12 +46,6 @@ namespace AvansDevOps.Sprints
             return this._state;
         }
 
-        public void GenerateReport()
-        {
-            // TODO
-            //state.GenerateReport();
-        }
-
         public List<Person> GetDevelopers()
         {
             return _developers;
