@@ -14,5 +14,10 @@ namespace AvansDevOps.Channels
         {
             return new EmailChannel(email);
         }
+
+        public IChannel CreateSlackChannel(string username)
+        {
+            return new SlackChannel(username);
+        }
     }
 }

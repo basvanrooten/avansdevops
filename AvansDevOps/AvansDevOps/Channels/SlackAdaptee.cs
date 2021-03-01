@@ -17,7 +17,14 @@ namespace AvansDevOps.Channels
 
         public void SendMessage(string message)
         {
-            //TODO: Figure out a way to test this.
+            //Validate Inputs
+            if (string.IsNullOrWhiteSpace(message))
+                throw new ArgumentNullException(nameof(message), "Message cannot be empty.");
+
+            //Must be less than or equal 1600 characters
+            if (message.Length >= 1600)
+                throw new ArgumentOutOfRangeException(nameof(message), "Message cannot be longer than 1600 chars");
+
             Console.WriteLine($"Slack message has been sent to: {this._username} Message: {message}");
         }
     }
