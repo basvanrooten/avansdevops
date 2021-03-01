@@ -10,10 +10,10 @@ namespace AvansDevOps.Sprints
     public class SprintFactory
     {
 
-        public void MakeReleaseSprint(string name, DateTime startDate, DateTime endDate, Project project, Person person,
+        public ISprint MakeReleaseSprint(string name, DateTime startDate, DateTime endDate, Project project, Person scrumMaster,
             List<Person> developers)
         {
-
+            return new ReleaseSprint(name, startDate, endDate, project, scrumMaster, developers);
         }
 
         public ISprint MakeReviewSprint(string name, DateTime startDate, DateTime endDate, Project project, Person scrumMaster,
