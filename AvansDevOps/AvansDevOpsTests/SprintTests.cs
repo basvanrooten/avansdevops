@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security;
 using AvansDevOps;
 using AvansDevOps.Persons;
+using AvansDevOps.Reports;
 using AvansDevOps.Reviews;
 using AvansDevOps.Sprints;
 using Xunit;
@@ -12,7 +13,39 @@ namespace AvansDevOpsTests
 {
     public class SprintTests
     {
+        [Fact]
+        public void Generating_A_Report_Should_Not_Throw_Exception()
+        {
+            // Arrange
 
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom", ERole.Developer);
+            Person p2 = new Person("Jan Peter", ERole.Tester);
+
+            ISprint sprint = factory.MakeReviewSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+
+            // Act
+            DateTime now = DateTime.Now;
+            Report generatedAvansReport = sprint.GenerateReport(EReportBranding.Avans, new List<string>() { "Burndown chart: foo", "Velocity: 21" }, "v1.0", now, EReportFormat.PDF);
+            Report generatedAvansPlusReport = sprint.GenerateReport(EReportBranding.AvansPlus, new List<string>() { "Burndown chart: bar", "Velocity: 13" }, "v2.0", now, EReportFormat.PNG);
+
+
+            // Assert
+            Assert.Equal(now, generatedAvansReport.Header.Date);
+            Assert.Equal("Avans", generatedAvansReport.Header.CompanyName);
+            Assert.Equal(new List<string>() { "Burndown chart: foo", "Velocity: 21" }, generatedAvansReport.Contents);
+            Assert.Equal("v1.0", generatedAvansReport.Header.ReportVersion);
+            Assert.Equal(EReportFormat.PDF, generatedAvansReport.Format);
+
+            Assert.Equal(now, generatedAvansPlusReport.Header.Date);
+            Assert.Equal("Avans+", generatedAvansPlusReport.Header.CompanyName);
+            Assert.Equal(new List<string>() { "Burndown chart: bar", "Velocity: 13" }, generatedAvansPlusReport.Contents);
+            Assert.Equal("v2.0", generatedAvansPlusReport.Header.ReportVersion);
+            Assert.Equal(EReportFormat.PNG, generatedAvansPlusReport.Format);
+        }
 
     }
 

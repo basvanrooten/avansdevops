@@ -56,6 +56,15 @@
     <Compile Include="Program.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\EReportBranding.cs" />
+    <Compile Include="Reports\EReportFormat.cs" />
+    <Compile Include="Reports\Footer.cs" />
+    <Compile Include="Reports\Header.cs" />
+    <Compile Include="Reports\IReportBuilder.cs" />
+    <Compile Include="Reports\Report.cs" />
+    <Compile Include="Reports\ReportBuilders\AvansPlusReportBuilder.cs" />
+    <Compile Include="Reports\ReportBuilders\AvansReportBuilder.cs" />
+    <Compile Include="Reports\ReportDirector.cs" />
     <Compile Include="Reviews\Review.cs" />
     <Compile Include="Sprints\ISprint.cs" />
     <Compile Include="Sprints\ReviewSprint.cs" />
