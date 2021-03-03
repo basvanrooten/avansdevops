@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AvansDevOps.Backlogs;
 using AvansDevOps.Persons;
 using AvansDevOps.Reports;
 using AvansDevOps.Reviews;
@@ -10,7 +11,7 @@ using AvansDevOps.Sprints.SprintStates;
 
 namespace AvansDevOps.Sprints
 {
-    class ReleaseSprint : ISprint
+    public class ReleaseSprint : ISprint
     {
         private string _name;
         private DateTime _startDate;
@@ -19,9 +20,7 @@ namespace AvansDevOps.Sprints
         private readonly Project _project;
         private readonly Person _scrumMaster;
         private readonly List<Person> _developers;
-
-        //TODO
-        //private List<BacklogItem> sprintBacklogItems;
+        private readonly List<BacklogItem> _sprintBacklogItems;
         private Review _review;
 
         public ReleaseSprint(string name, DateTime startDate, DateTime endDate, Project project, Person scrumMaster, List<Person> developers)
@@ -32,6 +31,7 @@ namespace AvansDevOps.Sprints
             this._project = project;
             this._scrumMaster = scrumMaster;
             this._developers = developers;
+            this._sprintBacklogItems = new List<BacklogItem>();
 
             this._state = new InitializedState(this);
         }
@@ -60,6 +60,18 @@ namespace AvansDevOps.Sprints
             if (this._developers.Contains(person))
                 throw new NotSupportedException("Can't add the same person twice");
             this._developers.Add(person);
+        }
+
+        public void AddToSprintBacklog(BacklogItem backlogItem)
+        {
+            if (_sprintBacklogItems.Contains(backlogItem)) return;
+            backlogItem.SetSprint(this);
+            _sprintBacklogItems.Add(backlogItem);
+        }
+
+        public List<BacklogItem> GetBacklogItems()
+        {
+            return _sprintBacklogItems;
         }
 
         public Project GetProject()

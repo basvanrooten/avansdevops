@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AvansDevOps.Backlogs;
 using AvansDevOps.Persons;
 using AvansDevOps.Reviews;
 
@@ -42,12 +43,12 @@ namespace AvansDevOps.Sprints.SprintStates
             this._sprint.AddDeveloper(developer);
         }
 
-        public void AddToSprintBacklog()
+        public void AddToSprintBacklog(BacklogItem backlogItem)
         {
-            throw new NotImplementedException();
+            this._sprint.AddToSprintBacklog(backlogItem);
         }
 
-        public void startStateAction()
+        public void StartStateAction()
         {
             throw new NotImplementedException();
         }
@@ -62,5 +63,7 @@ namespace AvansDevOps.Sprints.SprintStates
         {
             throw new NotSupportedException("There is no previous state for initialized");
         }
+
+
     }
 }

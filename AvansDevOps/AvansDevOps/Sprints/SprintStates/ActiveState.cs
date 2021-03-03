@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AvansDevOps.Backlogs;
 using AvansDevOps.Persons;
 using AvansDevOps.Reviews;
 
@@ -42,13 +43,13 @@ namespace AvansDevOps.Sprints.SprintStates
             this._sprint.AddDeveloper(developer);
         }
 
-        public void AddToSprintBacklog()
+        public void AddToSprintBacklog(BacklogItem backlogItem)
         {
             // Probably we should allow this since this can happen in practice a lot.
             throw new NotSupportedException("Can't add to sprint backlog when sprint is active");
         }
 
-        public void startStateAction()
+        public void StartStateAction()
         {
             throw new NotImplementedException();
         }
