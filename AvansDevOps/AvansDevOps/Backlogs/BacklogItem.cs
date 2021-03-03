@@ -133,7 +133,7 @@ namespace AvansDevOps.Backlogs
         {
             if (_tasks == null)
             {
-                throw new NullReferenceException("There are no tasks in this backlogItem");
+                throw new NotSupportedException("There are no tasks in this backlogItem");
             }
 
             return _tasks.Remove(task);

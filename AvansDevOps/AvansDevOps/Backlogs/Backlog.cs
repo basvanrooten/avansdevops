@@ -9,8 +9,8 @@ namespace AvansDevOps.Backlogs
 {
     public class Backlog
     {
-        private Project _project;
-        private List<BacklogItem> _backlogItems;
+        private readonly Project _project;
+        private readonly List<BacklogItem> _backlogItems;
 
         public Backlog(Project project)
         {

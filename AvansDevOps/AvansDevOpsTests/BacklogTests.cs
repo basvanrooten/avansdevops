@@ -62,6 +62,7 @@ namespace AvansDevOpsTests
 
             // Act
             var backlogItem1 = new BacklogItem("User can login into the platform", "Foo", p2, 3, backlog);
+            backlogItem1.AssignPerson(p2);
             backlog.AddBacklogItem(backlogItem1);
 
             // Assert
@@ -641,6 +642,374 @@ namespace AvansDevOpsTests
 
             // Assert
             Assert.Equal("ReadyToTestState", project.GetBacklog().GetBacklogItems().Find(item => item == backlogItem1).GetState().GetType().Name);
+        }
+    }
+
+    public partial class ReadyToTestStateBacklogItemsTests
+    {
+
+
+        /***
+         *      _____ _______ _______    _____ _        _         _______        _       
+         *     |  __ \__   __|__   __|  / ____| |      | |       |__   __|      | |      
+         *     | |__) | | |     | |    | (___ | |_ __ _| |_ ___     | | ___  ___| |_ ___ 
+         *     |  _  /  | |     | |     \___ \| __/ _` | __/ _ \    | |/ _ \/ __| __/ __|
+         *     | | \ \  | |     | |     ____) | || (_| | ||  __/    | |  __/\__ \ |_\__ \
+         *     |_|  \_\ |_|     |_|    |_____/ \__\__,_|\__\___|    |_|\___||___/\__|___/
+         *                                                                               
+         *                                                                               
+         */
+
+
+        [Fact]
+        public void Removing_Tasks_From_BacklogItem_In_ReadyToTestState_Should_Not_Throw_Exception()
+        {
+            // Arrange
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom", ERole.Developer);
+            p1.AddChannel(new EmailChannel("tom@tom.com"));
+            p1.AddChannel(new SlackChannel("teumaas"));
+            Person p2 = new Person("Jan Roos", ERole.Developer);
+            p2.AddChannel(new EmailChannel("jan-roos@c.com"));
+            Person p3 = new Person("Derk Jan", ERole.Tester);
+            p3.AddChannel(new SlackChannel("Derk-jan"));
+            Person p4 = new Person("Berend botje", ERole.Developer);
+            p4.AddChannel(new EmailChannel("berend@c.com"));
+            Person p5 = new Person("Lars", ERole.Developer);
+            p5.AddChannel(new EmailChannel("lars@c.com"));
+
+
+            ISprint sprint = factory.MakeReleaseSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+            project.AddTester(p3);
+
+            // Act
+            var backlog = new Backlog(project);
+            project.AddBacklog(backlog);
+
+
+            var backlogItem1 = new BacklogItem("User can login into the platform", "Look here", p2, 3, backlog);
+
+            backlog.AddBacklogItem(backlogItem1);
+            sprint.AddToSprintBacklog(backlogItem1);
+
+            backlogItem1.GetState().NextState();
+
+            var task1 = new Task("Bar", p4);
+            var task2 = new Task("lorem", p5);
+            var task3 = new Task("ipsum", p5);
+            backlogItem1.GetState().AddTask(task1);
+            backlogItem1.GetState().AddTask(task2);
+            backlogItem1.GetState().AddTask(task3);
+
+            backlogItem1.GetTasks().First().NextState();
+
+            task1.NextState();
+            task2.NextState();
+            task3.NextState();
+
+            backlogItem1.GetState().NextState();
+
+            // Assert
+            Assert.Equal(4, backlogItem1.GetTasks().Count);
+            backlogItem1.GetState().RemoveTask(task1);
+            Assert.Equal(3, backlogItem1.GetTasks().Count);
+            Assert.NotNull(backlogItem1.GetTasks().Find((task => task.GetDescription() == "Look here")));
+            Assert.NotNull(backlogItem1.GetTasks().Find((task => task.GetDescription() == "lorem")));
+            Assert.NotNull(backlogItem1.GetTasks().Find((task => task.GetDescription() == "ipsum")));
+        }
+
+        [Fact]
+        public void Adding_Tasks_From_BacklogItem_In_ReadyToTestState_Should_Throw_NotSupportedException()
+        {
+            // Arrange
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom", ERole.Developer);
+            p1.AddChannel(new EmailChannel("tom@tom.com"));
+            p1.AddChannel(new SlackChannel("teumaas"));
+            Person p2 = new Person("Jan Roos", ERole.Developer);
+            p2.AddChannel(new EmailChannel("jan-roos@c.com"));
+            Person p3 = new Person("Derk Jan", ERole.Tester);
+            p3.AddChannel(new SlackChannel("Derk-jan"));
+            Person p4 = new Person("Berend botje", ERole.Developer);
+            p4.AddChannel(new EmailChannel("berend@c.com"));
+            Person p5 = new Person("Lars", ERole.Developer);
+            p5.AddChannel(new EmailChannel("lars@c.com"));
+
+
+            ISprint sprint = factory.MakeReleaseSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+            project.AddTester(p3);
+
+            // Act
+            var backlog = new Backlog(project);
+            project.AddBacklog(backlog);
+
+
+            var backlogItem1 = new BacklogItem("User can login into the platform", "Look here", p2, 3, backlog);
+
+            backlog.AddBacklogItem(backlogItem1);
+            sprint.AddToSprintBacklog(backlogItem1);
+
+            backlogItem1.GetState().NextState();
+
+            var task1 = new Task("Bar", p4);
+            var task2 = new Task("lorem", p5);
+            var task3 = new Task("ipsum", p5);
+            backlogItem1.GetState().AddTask(task1);
+            backlogItem1.GetState().AddTask(task2);
+
+            backlogItem1.GetTasks().First().NextState();
+
+            task1.NextState();
+            task2.NextState();
+            task3.NextState();
+
+            backlogItem1.GetState().NextState();
+
+            // Assert
+            Assert.Equal(3, backlogItem1.GetTasks().Count);
+            Assert.NotNull(backlogItem1.GetTasks().Find((task => task.GetDescription() == "Look here")));
+            Assert.NotNull(backlogItem1.GetTasks().Find((task => task.GetDescription() == "lorem")));
+            Assert.Throws<NotSupportedException>(() => backlogItem1.GetState().AddTask(task3));
+            Assert.Null(backlogItem1.GetTasks().Find((task => task.GetDescription() == "ipsum")));
+        }
+
+        [Fact]
+        public void Changing_Name_or_Effort_or_Description_Should_Not_Throw_Exception()
+        {
+            // Arrange
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom", ERole.Developer);
+            p1.AddChannel(new EmailChannel("tom@tom.com"));
+            p1.AddChannel(new SlackChannel("teumaas"));
+            Person p2 = new Person("Jan Roos", ERole.Developer);
+            p2.AddChannel(new EmailChannel("jan-roos@c.com"));
+            Person p3 = new Person("Derk Jan", ERole.Tester);
+            p3.AddChannel(new SlackChannel("Derk-jan"));
+            Person p4 = new Person("Berend botje", ERole.Developer);
+            p4.AddChannel(new EmailChannel("berend@c.com"));
+            Person p5 = new Person("Lars", ERole.Developer);
+            p5.AddChannel(new EmailChannel("lars@c.com"));
+
+
+            ISprint sprint = factory.MakeReleaseSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+            project.AddTester(p3);
+
+            // Act
+            var backlog = new Backlog(project);
+            project.AddBacklog(backlog);
+
+
+            var backlogItem1 = new BacklogItem("User can login into the platform", "Look here", p2, 3, backlog);
+
+            backlog.AddBacklogItem(backlogItem1);
+            sprint.AddToSprintBacklog(backlogItem1);
+
+            backlogItem1.GetState().NextState();
+
+            var task1 = new Task("Bar", p4);
+            var task2 = new Task("lorem", p5);
+            var task3 = new Task("ipsum", p5);
+            backlogItem1.GetState().AddTask(task1);
+            backlogItem1.GetState().AddTask(task2);
+            backlogItem1.GetState().AddTask(task3);
+
+            backlogItem1.GetTasks().First().NextState();
+            task1.NextState();
+            task2.NextState();
+            task3.NextState();
+
+            backlogItem1.GetState().NextState();
+
+            backlogItem1.GetState().SetName("Test1");
+            backlogItem1.GetState().SetDescription("Test2");
+            backlogItem1.GetState().SetEffort(1);
+
+            // Assert
+            Assert.Equal("Test1", project.GetBacklog().GetBacklogItems().Find(item => item == backlogItem1).GetName());
+            Assert.Equal("Test2", project.GetBacklog().GetBacklogItems().Find(item => item == backlogItem1).GetDescription());
+            Assert.Equal(1, project.GetBacklog().GetBacklogItems().Find(item => item == backlogItem1).GetEffort());
+        }
+
+        [Fact]
+        public void To_Previous_State_Should_Not_Throw_Exception()
+        {
+            // Arrange
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom", ERole.Developer);
+            p1.AddChannel(new EmailChannel("tom@tom.com"));
+            p1.AddChannel(new SlackChannel("teumaas"));
+            Person p2 = new Person("Jan Roos", ERole.Developer);
+            p2.AddChannel(new EmailChannel("jan-roos@c.com"));
+            Person p3 = new Person("Derk Jan", ERole.Tester);
+            p3.AddChannel(new SlackChannel("Derk-jan"));
+            Person p4 = new Person("Berend botje", ERole.Developer);
+            p4.AddChannel(new EmailChannel("berend@c.com"));
+            Person p5 = new Person("Lars", ERole.Developer);
+            p5.AddChannel(new EmailChannel("lars@c.com"));
+
+
+            ISprint sprint = factory.MakeReleaseSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+            project.AddTester(p3);
+
+            // Act
+            var backlog = new Backlog(project);
+            project.AddBacklog(backlog);
+
+
+            var backlogItem1 = new BacklogItem("User can login into the platform", "Look here", p2, 3, backlog);
+
+            backlog.AddBacklogItem(backlogItem1);
+            sprint.AddToSprintBacklog(backlogItem1);
+
+            backlogItem1.GetState().NextState();
+
+            var task1 = new Task("Bar", p4);
+            var task2 = new Task("lorem", p5);
+            var task3 = new Task("ipsum", p5);
+            backlogItem1.GetState().AddTask(task1);
+            backlogItem1.GetState().AddTask(task2);
+            backlogItem1.GetState().AddTask(task3);
+
+            backlogItem1.GetTasks().First().NextState();
+            task1.NextState();
+            task2.NextState();
+            task3.NextState();
+
+            backlogItem1.GetState().NextState();
+
+            // Assert
+            backlogItem1.GetState().PreviousState();
+            Assert.Equal("TodoState", project.GetBacklog().GetBacklogItems().Find(item => item == backlogItem1).GetState().GetType().Name);
+        }
+
+        [Fact]
+        public void To_Next_State_With_Tasks_On_Todo_Or_Doing_Should_Throw_NotSupportedException()
+        {
+            // Arrange
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom", ERole.Developer);
+            p1.AddChannel(new EmailChannel("tom@tom.com"));
+            p1.AddChannel(new SlackChannel("teumaas"));
+            Person p2 = new Person("Jan Roos", ERole.Developer);
+            p2.AddChannel(new EmailChannel("jan-roos@c.com"));
+            Person p3 = new Person("Derk Jan", ERole.Tester);
+            p3.AddChannel(new SlackChannel("Derk-jan"));
+            Person p4 = new Person("Berend botje", ERole.Developer);
+            p4.AddChannel(new EmailChannel("berend@c.com"));
+            Person p5 = new Person("Lars", ERole.Developer);
+            p5.AddChannel(new EmailChannel("lars@c.com"));
+
+
+            ISprint sprint = factory.MakeReleaseSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+            project.AddTester(p3);
+
+            // Act
+            var backlog = new Backlog(project);
+            project.AddBacklog(backlog);
+
+
+            var backlogItem1 = new BacklogItem("User can login into the platform", "Look here", p2, 3, backlog);
+
+            backlog.AddBacklogItem(backlogItem1);
+            sprint.AddToSprintBacklog(backlogItem1);
+
+            var task1 = new Task("Bar", p4);
+            var task2 = new Task("lorem", p5);
+            var task3 = new Task("ipsum", p5);
+            backlogItem1.GetState().AddTask(task1);
+            backlogItem1.GetState().AddTask(task2);
+            backlogItem1.GetState().AddTask(task3);
+
+            backlogItem1.GetState().NextState();
+
+            backlogItem1.GetTasks().First().NextState();
+            task1.NextState();
+            task2.NextState();
+            task3.NextState();
+
+            task1.NextState();
+            task2.NextState();
+
+            backlogItem1.GetState().NextState();
+
+            // Assert
+            Assert.Throws<NotSupportedException>(() => backlogItem1.GetState().NextState());
+            Assert.Equal("ReadyToTestState", project.GetBacklog().GetBacklogItems().Find(item => item == backlogItem1).GetState().GetType().Name);
+        }
+
+        [Fact]
+        public void To_Next_State_With_No_Tasks_On_Todo_Or_Doing_Should_Not_Throw_Exception()
+        {
+            // Arrange
+            Project project = new Project("Test Project", new Person("Bas", ERole.Lead));
+            SprintFactory factory = new SprintFactory();
+
+            Person p1 = new Person("Tom", ERole.Developer);
+            p1.AddChannel(new EmailChannel("tom@tom.com"));
+            p1.AddChannel(new SlackChannel("teumaas"));
+            Person p2 = new Person("Jan Roos", ERole.Developer);
+            p2.AddChannel(new EmailChannel("jan-roos@c.com"));
+            Person p3 = new Person("Derk Jan", ERole.Tester);
+            p3.AddChannel(new SlackChannel("Derk-jan"));
+            Person p4 = new Person("Berend botje", ERole.Developer);
+            p4.AddChannel(new EmailChannel("berend@c.com"));
+            Person p5 = new Person("Lars", ERole.Developer);
+            p5.AddChannel(new EmailChannel("lars@c.com"));
+
+
+            ISprint sprint = factory.MakeReleaseSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), project, p1, new List<Person>() { p2 });
+            project.AddSprint(sprint);
+            project.AddTester(p3);
+
+            // Act
+            var backlog = new Backlog(project);
+            project.AddBacklog(backlog);
+
+
+            var backlogItem1 = new BacklogItem("User can login into the platform", "Look here", p2, 3, backlog);
+
+            backlog.AddBacklogItem(backlogItem1);
+            sprint.AddToSprintBacklog(backlogItem1);
+            backlogItem1.GetState().NextState();
+
+            var task1 = new Task("Bar", p4);
+            var task2 = new Task("lorem", p5);
+            var task3 = new Task("ipsum", p5);
+            backlogItem1.GetState().AddTask(task1);
+            backlogItem1.GetState().AddTask(task2);
+            backlogItem1.GetState().AddTask(task3);
+
+            backlogItem1.GetTasks().First().NextState();
+            task1.NextState();
+            task2.NextState();
+            task3.NextState();
+
+            backlogItem1.GetState().NextState();
+
+            backlogItem1.GetTasks().First().NextState();
+            task1.NextState();
+            task2.NextState();
+            task3.NextState();
+
+            backlogItem1.GetState().NextState();
+
+            // Assert
+            Assert.Equal("TestingState", project.GetBacklog().GetBacklogItems().Find(item => item == backlogItem1).GetState().GetType().Name);
         }
     }
 }
