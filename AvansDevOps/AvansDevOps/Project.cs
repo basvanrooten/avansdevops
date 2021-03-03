@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AvansDevOps.Backlogs;
 using AvansDevOps.Sprints;
 
 namespace AvansDevOps
@@ -13,6 +14,7 @@ namespace AvansDevOps
         private Person productOwner;
         private string name;
         private readonly List<ISprint> _sprints;
+        private Backlog _backlog;
         private readonly List<Person> _testers;
 
         public Project(string name, Person productOwner)
@@ -26,6 +28,16 @@ namespace AvansDevOps
         public Person GetProductOwner()
         {
             return this.productOwner;
+        }
+
+        public void AddBacklog(Backlog backlog)
+        {
+            _backlog = backlog;
+        }
+
+        public Backlog GetBacklog()
+        {
+            return _backlog;
         }
 
         public void AddSprint(ISprint sprint)
