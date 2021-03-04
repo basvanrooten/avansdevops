@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using AvansDevOps.Backlogs;
 using AvansDevOps.Persons;
 using AvansDevOps.Reviews;
 
@@ -50,12 +51,12 @@ namespace AvansDevOps.Sprints.SprintStates
             throw new NotSupportedException("Can't add developer when sprint is finished");
         }
 
-        public void AddToSprintBacklog()
+        public void AddToSprintBacklog(BacklogItem backlogItem)
         {
             throw new NotSupportedException("Can't add backlogItem when sprint is finished");
         }
 
-        public void startStateAction()
+        public void StartStateAction()
         {
             throw new NotImplementedException();
         }

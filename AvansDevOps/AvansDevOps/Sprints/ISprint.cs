@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AvansDevOps.Backlogs;
 using AvansDevOps.Persons;
 using AvansDevOps.Reports;
 using AvansDevOps.Reviews;
@@ -17,6 +18,8 @@ namespace AvansDevOps.Sprints
         Person GetScrumMaster();
         List<Person> GetDevelopers();
         void AddDeveloper(Person person);
+        void AddToSprintBacklog(BacklogItem backlogItem);
+        List<BacklogItem> GetBacklogItems();
         Project GetProject();
         string GetName();
         void SetName(string name);

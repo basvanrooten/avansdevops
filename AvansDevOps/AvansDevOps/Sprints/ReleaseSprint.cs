@@ -11,7 +11,7 @@ using AvansDevOps.Sprints.SprintStates;
 
 namespace AvansDevOps.Sprints
 {
-    public class ReviewSprint : ISprint
+    public class ReleaseSprint : ISprint
     {
         private string _name;
         private DateTime _startDate;
@@ -23,7 +23,7 @@ namespace AvansDevOps.Sprints
         private readonly List<BacklogItem> _sprintBacklogItems;
         private Review _review;
 
-        public ReviewSprint(string name, DateTime startDate, DateTime endDate, Project project, Person scrumMaster, List<Person> developers)
+        public ReleaseSprint(string name, DateTime startDate, DateTime endDate, Project project, Person scrumMaster, List<Person> developers)
         {
             this._name = name;
             this._startDate = startDate;
@@ -34,9 +34,7 @@ namespace AvansDevOps.Sprints
             this._sprintBacklogItems = new List<BacklogItem>();
 
             this._state = new InitializedState(this);
-
         }
-
         public void ChangeState(ISprintState state)
         {
             this._state = state;
@@ -44,37 +42,31 @@ namespace AvansDevOps.Sprints
 
         public ISprintState GetState()
         {
-            return this._state;
+            return _state;
+        }
+
+        public Person GetScrumMaster()
+        {
+            return this._scrumMaster;
         }
 
         public List<Person> GetDevelopers()
         {
-            return _developers;
+            return this._developers;
         }
 
-        public void AddDeveloper(Person developer)
+        public void AddDeveloper(Person person)
         {
-            this._developers.Add(developer);
+            if (this._developers.Contains(person))
+                throw new NotSupportedException("Can't add the same person twice");
+            this._developers.Add(person);
         }
 
-        public DateTime GetEndDate()
+        public void AddToSprintBacklog(BacklogItem backlogItem)
         {
-            return _endDate;
-        }
-
-        public Review GetReview()
-        {
-            return this._review;
-        }
-
-        public void SetReview(Review review)
-        {
-            this._review = review;
-        }
-
-        public string GetName()
-        {
-            return _name;
+            if (_sprintBacklogItems.Contains(backlogItem)) return;
+            backlogItem.SetSprint(this);
+            _sprintBacklogItems.Add(backlogItem);
         }
 
         public List<BacklogItem> GetBacklogItems()
@@ -84,44 +76,53 @@ namespace AvansDevOps.Sprints
 
         public Project GetProject()
         {
-            return _project;
+            return this._project;
         }
 
-        public Person GetScrumMaster()
+        public string GetName()
         {
-            return _scrumMaster;
-        }
-
-        public DateTime GetStartDate()
-        {
-            return _startDate;
-        }
-
-        public void SetEndDate(DateTime endDate)
-        {
-            _endDate = endDate;
+            return this._name;
         }
 
         public void SetName(string name)
         {
-            _name = name;
+            this._name = name;
+        }
+
+        public DateTime GetStartDate()
+        {
+            return this._startDate;
         }
 
         public void SetStartDate(DateTime startDate)
         {
-            _startDate = startDate;
+            this._startDate = startDate;
+        }
+
+        public DateTime GetEndDate()
+        {
+            return this._endDate;
+        }
+
+        public void SetReview(Review review)
+        {
+            this._review = review;
+        }
+
+        public Review GetReview()
+        {
+            return this._review;
+        }
+
+        public void SetEndDate(DateTime endDate)
+        {
+            this._endDate = endDate;
         }
 
         public Report GenerateReport(EReportBranding branding, List<string> contents, string version, DateTime date, EReportFormat format)
         {
             return branding == EReportBranding.Avans ? ReportDirector.BuildAvansReport(this, contents, version, date, format) : ReportDirector.BuildAvansPlusReport(this, contents, version, date, format);
-        }
 
-        public void AddToSprintBacklog(BacklogItem backlogItem)
-        {
-            if (_sprintBacklogItems.Contains(backlogItem)) return;
-            backlogItem.SetSprint(this);
-            _sprintBacklogItems.Add(backlogItem);
         }
     }
 }

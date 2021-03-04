@@ -45,6 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Backlogs\Backlog.cs" />
+    <Compile Include="Backlogs\BacklogItem.cs" />
+    <Compile Include="Backlogs\BacklogItemStates\DoingState.cs" />
+    <Compile Include="Backlogs\BacklogItemStates\DoneState.cs" />
+    <Compile Include="Backlogs\BacklogItemStates\IBacklogItemState.cs" />
+    <Compile Include="Backlogs\BacklogItemStates\ReadyToTestState.cs" />
+    <Compile Include="Backlogs\BacklogItemStates\TestingState.cs" />
+    <Compile Include="Backlogs\BacklogItemStates\TodoState.cs" />
+    <Compile Include="Backlogs\ETaskState.cs" />
+    <Compile Include="Backlogs\Task.cs" />
     <Compile Include="Channels\ChannelFactory.cs" />
     <Compile Include="Channels\EmailAdaptee.cs" />
     <Compile Include="Channels\EmailChannel.cs" />
@@ -70,6 +80,7 @@
     <Compile Include="Reports\ReportDirector.cs" />
     <Compile Include="Reviews\Review.cs" />
     <Compile Include="Sprints\ISprint.cs" />
+    <Compile Include="Sprints\ReleaseSprint.cs" />
     <Compile Include="Sprints\ReviewSprint.cs" />
     <Compile Include="Sprints\SprintFactory.cs" />
     <Compile Include="Sprints\SprintStates\ActiveState.cs" />
