@@ -11,9 +11,9 @@ namespace AvansDevOps.Forums
     public class Thread
     {
         private readonly List<Comment> _comments;
-        private string _title;
-        private DateTime _date;
-        private Person _author;
+        private readonly string _title;
+        private readonly DateTime _date;
+        private readonly Person _author;
         private readonly Task _taskReference;
 
         public Thread(string title, DateTime date, Person author, Task task)

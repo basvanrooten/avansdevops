@@ -301,5 +301,68 @@ namespace AvansDevOpsTests
             Assert.Contains(commentOne, thread.GetComments());
             Assert.Contains(commentTwo, thread.GetComments());
         }
+
+        [Fact]
+        public void AddComment_Can_Remove_Comment_To_Existing_Thread()
+        {
+            // Arrange
+            Forum forum = new Forum();
+
+            DateTime currentDateTime = DateTime.Now;
+            Person person = new Person("Bas", ERole.Lead);
+            Task task = new Task("Sample Task", person);
+            const string name = "ThreadOne title.";
+
+            Thread thread = new Thread(name, currentDateTime, person, task);
+
+            Person personTwo = new Person("Tom", ERole.Developer);
+            const string contentCommentOne = "This is a test comment one.";
+
+            Comment comment = new Comment(thread, personTwo, currentDateTime, contentCommentOne);
+
+            // Act
+            forum.NewThread(thread);
+            thread.AddComment(comment);
+            thread.DeleteComment(comment);
+
+            // Assert
+            Assert.Contains(thread, forum.GetThreads());
+            Assert.DoesNotContain(comment, thread.GetComments());
+        }
+
+        [Fact]
+        public void AddComment_Can_Remove_Multiple_Comments_To_Existing_Thread()
+        {
+            // Arrange
+            Forum forum = new Forum();
+
+            DateTime currentDateTime = DateTime.Now;
+            Person person = new Person("Bas", ERole.Lead);
+            Task task = new Task("Sample Task", person);
+            const string name = "ThreadOne title.";
+
+            Thread thread = new Thread(name, currentDateTime, person, task);
+
+            Person personTwo = new Person("Tom", ERole.Developer);
+            const string contentCommentOne = "This is a test comment one.";
+
+            Person personThree = new Person("Jan", ERole.Developer);
+            const string contentCommentTwo = "This is a test comment two.";
+
+            Comment commentOne = new Comment(thread, personTwo, currentDateTime, contentCommentOne);
+            Comment commentTwo = new Comment(thread, personThree, currentDateTime, contentCommentTwo);
+
+            // Act
+            forum.NewThread(thread);
+            thread.AddComment(commentOne);
+            thread.AddComment(commentTwo);
+            thread.DeleteComment(commentOne);
+            thread.DeleteComment(commentTwo);
+
+            // Assert
+            Assert.Contains(thread, forum.GetThreads());
+            Assert.DoesNotContain(commentOne, thread.GetComments());
+            Assert.DoesNotContain(commentTwo, thread.GetComments());
+        }
     }
 }

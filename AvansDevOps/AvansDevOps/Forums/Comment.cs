@@ -9,10 +9,10 @@ namespace AvansDevOps.Forums
 {
     public class Comment
     {
-        private Thread _thread;
-        private Person _author;
-        private DateTime _date;
-        private string _comment;
+        private readonly Thread _thread;
+        private readonly Person _author;
+        private readonly DateTime _date;
+        private readonly string _comment;
 
         public Comment(Thread thread, Person author, DateTime date, string comment)
         {
@@ -22,7 +22,7 @@ namespace AvansDevOps.Forums
             _comment = comment;
         }
 
-        public Thread GeThread()
+        public Thread GetThread()
         {
             return _thread;
         }
