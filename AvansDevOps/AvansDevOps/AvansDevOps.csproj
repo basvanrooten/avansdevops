@@ -76,6 +76,10 @@
     <Compile Include="Reports\ReportBuilders\AvansReportBuilder.cs" />
     <Compile Include="Reports\ReportDirector.cs" />
     <Compile Include="Reviews\Review.cs" />
+    <Compile Include="SCM\CommitFactory.cs" />
+    <Compile Include="SCM\GitCommit.cs" />
+    <Compile Include="SCM\ICommit.cs" />
+    <Compile Include="SCM\Source.cs" />
     <Compile Include="Sprints\ISprint.cs" />
     <Compile Include="Sprints\ReleaseSprint.cs" />
     <Compile Include="Sprints\ReviewSprint.cs" />
