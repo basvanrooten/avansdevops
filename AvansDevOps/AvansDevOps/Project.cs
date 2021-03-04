@@ -53,7 +53,6 @@ namespace AvansDevOps
             return this._sprints;
         }
 
-
         public string GetName()
         {
             return this.name;
