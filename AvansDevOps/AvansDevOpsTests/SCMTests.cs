@@ -28,6 +28,7 @@ namespace AvansDevOpsTests
 
             // Assert
             Assert.Contains(source, project.GetSources());
+            Assert.Equal("AvansDevOps_Web", project.GetSources().First().GetName());
 
         }
 
@@ -72,6 +73,9 @@ namespace AvansDevOpsTests
 
 
             // Assert
+            Assert.Equal("Adding login section to website", project.GetSources().First().GetCommits().Find((foundCommit) => foundCommit == commit).GetTitle());
+            Assert.Equal("Reference to backlogItem", project.GetSources().First().GetCommits().Find((foundCommit) => foundCommit == commit).GetDescription());
+            Assert.Equal(project.GetBacklog().GetBacklogItems().Find(backlogItem => backlogItem.GetDescription() == "foo"), project.GetSources().First().GetCommits().Find((foundCommit) => foundCommit == commit).GetBacklogItem());
             Assert.Contains(commit, project.GetSources().First().GetCommits());
 
         }
@@ -129,7 +133,7 @@ namespace AvansDevOpsTests
 
 
             // Assert
-            Assert.Throws<NotSupportedException>(() => project.AddSource(source));
+            Assert.Throws<NotSupportedException>(() => project.RemoveSource(source));
             Assert.Single(project.GetSources());
         }
     }
