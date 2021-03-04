@@ -51,6 +51,9 @@
     <Compile Include="Channels\IChannel.cs" />
     <Compile Include="Channels\SlackAdaptee.cs" />
     <Compile Include="Channels\SlackChannel.cs" />
+    <Compile Include="Forums\Comment.cs" />
+    <Compile Include="Forums\Forum.cs" />
+    <Compile Include="Forums\Thread.cs" />
     <Compile Include="Persons\ERole.cs" />
     <Compile Include="Persons\Person.cs" />
     <Compile Include="Program.cs" />
