@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AvansDevOps.Backlogs;
 using AvansDevOps.Persons;
 using AvansDevOps.Reports;
 using AvansDevOps.Reviews;
@@ -19,9 +20,7 @@ namespace AvansDevOps.Sprints
         private readonly Project _project;
         private readonly Person _scrumMaster;
         private readonly List<Person> _developers;
-
-        //TODO
-        //private List<BacklogItem> sprintBacklogItems;
+        private readonly List<BacklogItem> _sprintBacklogItems;
         private Review _review;
 
         public ReviewSprint(string name, DateTime startDate, DateTime endDate, Project project, Person scrumMaster, List<Person> developers)
@@ -32,6 +31,8 @@ namespace AvansDevOps.Sprints
             this._project = project;
             this._scrumMaster = scrumMaster;
             this._developers = developers;
+            this._sprintBacklogItems = new List<BacklogItem>();
+
             this._state = new InitializedState(this);
 
         }
@@ -76,6 +77,11 @@ namespace AvansDevOps.Sprints
             return _name;
         }
 
+        public List<BacklogItem> GetBacklogItems()
+        {
+            return _sprintBacklogItems;
+        }
+
         public Project GetProject()
         {
             return _project;
@@ -109,6 +115,13 @@ namespace AvansDevOps.Sprints
         public Report GenerateReport(EReportBranding branding, List<string> contents, string version, DateTime date, EReportFormat format)
         {
             return branding == EReportBranding.Avans ? ReportDirector.BuildAvansReport(this, contents, version, date, format) : ReportDirector.BuildAvansPlusReport(this, contents, version, date, format);
+        }
+
+        public void AddToSprintBacklog(BacklogItem backlogItem)
+        {
+            if (_sprintBacklogItems.Contains(backlogItem)) return;
+            backlogItem.SetSprint(this);
+            _sprintBacklogItems.Add(backlogItem);
         }
     }
 }
