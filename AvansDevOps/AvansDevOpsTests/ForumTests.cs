@@ -364,5 +364,119 @@ namespace AvansDevOpsTests
             Assert.DoesNotContain(commentOne, thread.GetComments());
             Assert.DoesNotContain(commentTwo, thread.GetComments());
         }
+
+        [Fact]
+        public void NewThread_Cant_Add_Empty_Comment_On_Thread_Throw_ArgumentNullException()
+        {
+            // Arrange
+            Forum forum = new Forum();
+
+            DateTime currentDateTime = DateTime.Now;
+            Person person = new Person("Bas", ERole.Lead);
+            Task task = new Task("Sample Task", person);
+            const string name = "ThreadOne title.";
+
+            Thread thread = new Thread(name, currentDateTime, person, task);
+
+            Person personTwo = new Person("Tom", ERole.Developer);
+            const string contentCommentOne = "";
+
+            Comment commentOne = new Comment(thread, personTwo, currentDateTime, contentCommentOne);
+
+            // Act
+            forum.NewThread(thread);
+
+            // Assert
+            Assert.DoesNotContain(commentOne, thread.GetComments());
+            Assert.Throws<ArgumentNullException>(() => thread.AddComment(commentOne));
+        }
+
+        [Fact]
+        public void NewThread_Cant_Add_Multiple_Empty_Comments_On_Thread_Throw_ArgumentNullException()
+        {
+            // Arrange
+            Forum forum = new Forum();
+
+            DateTime currentDateTime = DateTime.Now;
+            Person person = new Person("Bas", ERole.Lead);
+            Task task = new Task("Sample Task", person);
+            const string name = "ThreadOne title.";
+
+            Thread thread = new Thread(name, currentDateTime, person, task);
+
+            Person personTwo = new Person("Tom", ERole.Developer);
+            const string contentCommentOne = "";
+
+            Person personThree = new Person("Jan", ERole.Developer);
+            const string contentCommentTwo = "";
+
+            Comment commentOne = new Comment(thread, personTwo, currentDateTime, contentCommentOne);
+            Comment commentTwo = new Comment(thread, personTwo, currentDateTime, contentCommentTwo);
+
+            // Act
+            forum.NewThread(thread);
+
+            // Assert
+            Assert.DoesNotContain(commentOne, thread.GetComments());
+            Assert.Throws<ArgumentNullException>(() => thread.AddComment(commentOne));
+            Assert.DoesNotContain(commentTwo, thread.GetComments());
+            Assert.Throws<ArgumentNullException>(() => thread.AddComment(commentTwo));
+        }
+
+        [Fact]
+        public void NewThread_Cant_Add_Comment_On_Thread_State_Done_Throw_NotSupportedException()
+        {
+            // Arrange
+            Forum forum = new Forum();
+
+            DateTime currentDateTime = DateTime.Now;
+            Person person = new Person("Bas", ERole.Lead);
+            Task task = new Task("Sample Task", person);
+            const string name = "ThreadOne title.";
+
+            Thread thread = new Thread(name, currentDateTime, person, task);
+
+            Person personTwo = new Person("Tom", ERole.Developer);
+            const string contentCommentOne = "ThreadOne title.";
+
+            Comment commentOne = new Comment(thread, personTwo, currentDateTime, contentCommentOne);
+
+            // Act
+            forum.NewThread(thread);
+            task.NextState();
+            task.NextState();
+
+            // Assert
+            Assert.DoesNotContain(commentOne, thread.GetComments());
+            Assert.Throws<NotSupportedException>(() => thread.AddComment(commentOne));
+        }
+
+        [Fact]
+        public void NewThread_Cant_Delete_Comment_On_Thread_State_Done_Throw_NotSupportedException()
+        {
+            // Arrange
+            Forum forum = new Forum();
+
+            DateTime currentDateTime = DateTime.Now;
+            Person person = new Person("Bas", ERole.Lead);
+            Task task = new Task("Sample Task", person);
+            const string name = "ThreadOne title.";
+
+            Thread thread = new Thread(name, currentDateTime, person, task);
+
+            Person personTwo = new Person("Tom", ERole.Developer);
+            const string contentCommentOne = "ThreadOne title.";
+
+            Comment commentOne = new Comment(thread, personTwo, currentDateTime, contentCommentOne);
+
+            // Act
+            forum.NewThread(thread);
+            task.NextState();
+            task.NextState();
+
+            // Assert
+            Assert.DoesNotContain(commentOne, thread.GetComments());
+            Assert.Throws<NotSupportedException>(() => thread.DeleteComment(commentOne));
+        }
     }
 }
