@@ -9,7 +9,6 @@ namespace AvansDevOps.Pipelines.PipelineStates.Analyze
     public interface IAnalyzeStateBehaviour
     {
         bool Execute();
-        IPipelineState NextState();
         string GetErrorMessage();
     }
 }

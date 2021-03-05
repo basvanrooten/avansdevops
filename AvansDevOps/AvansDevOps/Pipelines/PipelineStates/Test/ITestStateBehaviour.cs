@@ -9,7 +9,6 @@ namespace AvansDevOps.Pipelines.PipelineStates.Test
     public interface ITestStateBehaviour
     {
         bool Execute();
-        IPipelineState NextState();
         string GetErrorMessage();
     }
 }

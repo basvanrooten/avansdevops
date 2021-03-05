@@ -9,7 +9,6 @@ namespace AvansDevOps.Pipelines.PipelineStates.Source
     public interface ISourceStateBehaviour
     {
         bool Execute();
-        IPipelineState NextState();
         string GetErrorMessage();
     }
 }

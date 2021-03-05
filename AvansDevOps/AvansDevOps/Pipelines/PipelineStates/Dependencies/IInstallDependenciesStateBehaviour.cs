@@ -9,7 +9,6 @@ namespace AvansDevOps.Pipelines.PipelineStates.Dependencies
     public interface IInstallDependenciesStateBehaviour
     {
         bool Execute();
-        IPipelineState NextState();
         string GetErrorMessage();
     }
 }

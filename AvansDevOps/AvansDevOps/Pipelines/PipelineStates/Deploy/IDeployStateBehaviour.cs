@@ -9,7 +9,6 @@ namespace AvansDevOps.Pipelines.PipelineStates.Deploy
     public interface IDeployStateBehaviour
     {
         bool Execute();
-        IPipelineState NextState();
         string GetErrorMessage();
     }
 }

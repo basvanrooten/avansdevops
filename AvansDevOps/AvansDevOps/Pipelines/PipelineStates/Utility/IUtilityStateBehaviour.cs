@@ -9,7 +9,6 @@ namespace AvansDevOps.Pipelines.PipelineStates.Utility
     public interface IUtilityStateBehaviour
     {
         bool Execute();
-        IPipelineState NextState();
         string GetErrorMessage();
     }
 }
