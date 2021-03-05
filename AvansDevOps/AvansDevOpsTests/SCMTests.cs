@@ -133,8 +133,8 @@ namespace AvansDevOpsTests
 
 
             // Assert
-            Assert.Throws<NotSupportedException>(() => project.RemoveSource(source));
-            Assert.Single(project.GetSources());
+            project.RemoveSource(source);
+            Assert.Empty(project.GetSources());
         }
     }
 }
