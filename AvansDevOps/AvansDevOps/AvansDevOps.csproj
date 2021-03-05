@@ -66,6 +66,14 @@
     <Compile Include="Forums\Thread.cs" />
     <Compile Include="Persons\ERole.cs" />
     <Compile Include="Persons\Person.cs" />
+    <Compile Include="Pipelines\PipelineStates\Analyze\IAnalyzeStateBehaviour.cs" />
+    <Compile Include="Pipelines\PipelineStates\Build\IBuildStateBehaviour.cs" />
+    <Compile Include="Pipelines\PipelineStates\Dependencies\IInstallDependenciesStateBehaviour.cs" />
+    <Compile Include="Pipelines\PipelineStates\Deploy\IDeployStateBehaviour.cs" />
+    <Compile Include="Pipelines\PipelineStates\IPipelineState.cs" />
+    <Compile Include="Pipelines\PipelineStates\Source\ISourceStateBehaviour.cs" />
+    <Compile Include="Pipelines\PipelineStates\Test\ITestStateBehaviour.cs" />
+    <Compile Include="Pipelines\PipelineStates\Utility\IUtilityStateBehaviour.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
