@@ -13,8 +13,8 @@ namespace AvansDevOps
 {
     public class Project
     {
-        private Person productOwner;
-        private string name;
+        private readonly Person _productOwner;
+        private readonly string _name;
         private readonly List<ISprint> _sprints;
         private Backlog _backlog;
         private Forum _forum;
@@ -23,8 +23,8 @@ namespace AvansDevOps
 
         public Project(string name, Person productOwner)
         {
-            this.name = name;
-            this.productOwner = productOwner;
+            this._name = name;
+            this._productOwner = productOwner;
             this._sprints = new List<ISprint>();
             this._testers = new List<Person>();
             this._sources = new List<Source>();
@@ -32,7 +32,7 @@ namespace AvansDevOps
 
         public Person GetProductOwner()
         {
-            return this.productOwner;
+            return this._productOwner;
         }
 
         public void AddBacklog(Backlog backlog)
@@ -67,7 +67,7 @@ namespace AvansDevOps
 
         public string GetName()
         {
-            return this.name;
+            return this._name;
         }
 
         public void AddTester(Person tester)

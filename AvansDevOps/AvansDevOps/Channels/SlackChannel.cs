@@ -8,7 +8,7 @@ namespace AvansDevOps.Channels
 {
     public class SlackChannel : IChannel
     {
-        private string _username;
+        private readonly string _username;
         private readonly SlackAdaptee _adaptee;
 
         public SlackChannel(string username)
