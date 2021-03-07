@@ -64,6 +64,11 @@
     <Compile Include="Forums\Comment.cs" />
     <Compile Include="Forums\Forum.cs" />
     <Compile Include="Forums\Thread.cs" />
+    <Compile Include="Notifications\BacklogItemObserver.cs" />
+    <Compile Include="Notifications\IObserver.cs" />
+    <Compile Include="Notifications\ISubject.cs" />
+    <Compile Include="Notifications\NotificationSubject.cs" />
+    <Compile Include="Notifications\SprintObserver.cs" />
     <Compile Include="Persons\ERole.cs" />
     <Compile Include="Persons\Person.cs" />
     <Compile Include="Pipelines\DevelopmentPipeline.cs" />
