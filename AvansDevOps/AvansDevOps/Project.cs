@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AvansDevOps.Backlogs;
+using AvansDevOps.Forums;
 using AvansDevOps.SCM;
 using AvansDevOps.Sprints;
 
@@ -16,6 +17,7 @@ namespace AvansDevOps
         private string name;
         private readonly List<ISprint> _sprints;
         private Backlog _backlog;
+        private Forum _forum;
         private readonly List<Person> _testers;
         private readonly List<Source> _sources;
 
@@ -41,6 +43,16 @@ namespace AvansDevOps
         public Backlog GetBacklog()
         {
             return _backlog;
+        }
+
+        public void AddForum(Forum forum)
+        {
+            _forum = forum;
+        }
+
+        public Forum GetForum()
+        {
+            return _forum;
         }
 
         public void AddSprint(ISprint sprint)
