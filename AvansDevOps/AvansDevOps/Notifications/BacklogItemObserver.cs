@@ -29,6 +29,10 @@ namespace AvansDevOps.Notifications
                     ReadyToTestState(backlogItem);
                     break;
 
+                case "TestingState":
+                    TestingState(backlogItem);
+                    break;
+
                 case "DoneState":
                     DoneState(backlogItem);
                     break;
@@ -37,10 +41,9 @@ namespace AvansDevOps.Notifications
 
         private void TodoState(BacklogItem backlogItem)
         {
-            // BacklogItem is in ToDo state.
-            var productOwner = backlogItem.GetBacklog().GetProject().GetProductOwner();
+            var scrumMaster = backlogItem.GetSprint().GetScrumMaster();
 
-            productOwner.SendNotification($"Hello lead {productOwner.GetName()}, BacklogItem {backlogItem.GetDescription()} is in ToDo state.");
+            scrumMaster.SendNotification($"Hello scrum master {scrumMaster.GetName()}, BacklogItem {backlogItem.GetDescription()} is in ToDo state.");
         }
 
         private void DoingState(BacklogItem backlogItem)
@@ -70,6 +73,13 @@ namespace AvansDevOps.Notifications
             {
                 tester.SendNotification($"Hello tester {tester.GetName()}, BacklogItem {backlogItem.GetDescription()} is ready to test");
             }
+        }
+
+        private void TestingState(BacklogItem backlogItem)
+        {
+            var scrumMaster = backlogItem.GetSprint().GetScrumMaster();
+
+            scrumMaster.SendNotification($"Hello scrum master {scrumMaster.GetName()}, BacklogItem {backlogItem.GetDescription()} is in Testing state.");
         }
 
         private void DoneState(BacklogItem backlogItem)
