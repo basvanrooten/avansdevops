@@ -23,7 +23,7 @@ namespace AvansDevOps.Pipelines.PipelineStates.Deploy
             var pipelineResult = _behaviour.Execute();
 
             if (!pipelineResult || _behaviour.GetErrorMessage() != null)
-                throw new Exception($"Pipeline failed: DeployState: {_behaviour.GetErrorMessage()} ");
+                throw new NotSupportedException($"Pipeline failed: DeployState: {_behaviour.GetErrorMessage()} ");
 
             this.NextState();
         }

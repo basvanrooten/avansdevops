@@ -23,7 +23,7 @@ namespace AvansDevOps.Pipelines.PipelineStates.Dependencies
             var pipelineResult = _behaviour.Execute();
 
             if (!pipelineResult || _behaviour.GetErrorMessage() != null)
-                throw new Exception($"Pipeline failed: Install Dependencies State: {_behaviour.GetErrorMessage()} ");
+                throw new NotSupportedException($"Pipeline failed: Install Dependencies State: {_behaviour.GetErrorMessage()} ");
 
             this.NextState();
         }

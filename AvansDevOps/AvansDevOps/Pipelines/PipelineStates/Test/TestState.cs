@@ -23,7 +23,7 @@ namespace AvansDevOps.Pipelines.PipelineStates.Test
             var pipelineResult = _behaviour.Execute();
 
             if (!pipelineResult || _behaviour.GetErrorMessage() != null)
-                throw new Exception($"Pipeline failed: TestState: {_behaviour.GetErrorMessage()} ");
+                throw new NotSupportedException($"Pipeline failed: TestState: {_behaviour.GetErrorMessage()} ");
 
             this.NextState();
         }

@@ -23,7 +23,7 @@ namespace AvansDevOps.Pipelines.PipelineStates.Source
             var pipelineResult = _behaviour.Execute();
 
             if (!pipelineResult || _behaviour.GetErrorMessage() != null)
-                throw new Exception($"Pipeline failed: SourceState: {_behaviour.GetErrorMessage()} ");
+                throw new NotSupportedException($"Pipeline failed: SourceState: {_behaviour.GetErrorMessage()} ");
 
             this.NextState();
         }
