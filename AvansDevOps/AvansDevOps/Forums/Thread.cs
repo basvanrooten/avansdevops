@@ -33,7 +33,15 @@ namespace AvansDevOps.Forums
 
             if (string.IsNullOrWhiteSpace(comment.GetContent()))
                 throw new ArgumentNullException(comment.GetContent(), "Content of comment cannot be empty.");
-            
+
+
+            foreach (var foundComment in _comments)
+            {
+                foundComment.GetAuthor().SendNotification($"Hi {foundComment.GetAuthor().GetName()}, a new comment from {comment.GetAuthor()} has been posted on a thread called {_title} on which you have activity");
+            }
+
+            _author.SendNotification($"Hello {_author.GetName()}, your thread received a new comment from {comment.GetAuthor().GetName()}. Please check your thread for new additions.");
+
             _comments.Add(comment);
         }
 

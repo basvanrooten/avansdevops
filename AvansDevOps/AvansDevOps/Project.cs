@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AvansDevOps.Backlogs;
+using AvansDevOps.SCM;
 using AvansDevOps.Sprints;
 
 namespace AvansDevOps
@@ -16,6 +17,7 @@ namespace AvansDevOps
         private readonly List<ISprint> _sprints;
         private Backlog _backlog;
         private readonly List<Person> _testers;
+        private readonly List<Source> _sources;
 
         public Project(string name, Person productOwner)
         {
@@ -23,6 +25,7 @@ namespace AvansDevOps
             this.productOwner = productOwner;
             this._sprints = new List<ISprint>();
             this._testers = new List<Person>();
+            this._sources = new List<Source>();
         }
 
         public Person GetProductOwner()
@@ -70,6 +73,23 @@ namespace AvansDevOps
         public List<Person> GetTesters()
         {
             return _testers;
+        }
+
+        public void AddSource(Source source)
+        {
+            if (_sources.Contains(source))
+                throw new NotSupportedException("Can't add the same source twice");
+            _sources.Add(source);
+        }
+
+        public bool RemoveSource(Source source)
+        {
+            return _sources.Remove(source);
+        }
+
+        public List<Source> GetSources()
+        {
+            return _sources;
         }
     }
 }

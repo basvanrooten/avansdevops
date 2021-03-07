@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using AvansDevOps.Backlogs.BacklogItemStates;
 using AvansDevOps.Persons;
 using AvansDevOps.Sprints;
+using AvansDevOps.Notifications;
 
 namespace AvansDevOps.Backlogs
 {
-    public class BacklogItem
+    public class BacklogItem : NotificationSubject
     {
         private string _name;
         private string _description;
@@ -93,6 +94,7 @@ namespace AvansDevOps.Backlogs
                 throw new NotSupportedException(
                     "Can't change the state of a backlogItem because it is not in a sprint");
             _state = state;
+            NotifyObservers();
         }
 
         public IBacklogItemState GetState()
@@ -138,6 +140,5 @@ namespace AvansDevOps.Backlogs
 
             return _tasks.Remove(task);
         }
-
     }
 }
