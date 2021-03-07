@@ -9,7 +9,7 @@ namespace AvansDevOps.Pipelines.PipelineStates.Analyze
     public class AnalyzeBehaviour : IAnalyzeStateBehaviour
     {
         private readonly IPipeline _pipeline;
-        private string _errors;
+        private readonly string _errors;
 
         public AnalyzeBehaviour(IPipeline pipeline)
         {

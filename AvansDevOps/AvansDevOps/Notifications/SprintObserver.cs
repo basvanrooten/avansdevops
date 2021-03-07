@@ -10,7 +10,7 @@ namespace AvansDevOps.Notifications
     {
         public void Update(NotificationSubject subject)
         {
-            //if (!(subject is Sprint backlogItem)) return;
+            throw new NotImplementedException();
         }
     }
 }

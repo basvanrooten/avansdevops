@@ -23,7 +23,6 @@ namespace AvansDevOps.Forums
             _author = author;
             _taskReference = task;
             _comments = new List<Comment>();
-
         }
         
         public void AddComment(Comment comment)
@@ -69,6 +68,11 @@ namespace AvansDevOps.Forums
         public string GetTitle()
         {
             return _title;
+        }
+
+        public DateTime GetDate()
+        {
+            return _date;
         }
     }
 }

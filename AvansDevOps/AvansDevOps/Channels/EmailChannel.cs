@@ -8,7 +8,7 @@ namespace AvansDevOps.Channels
 {
     public class EmailChannel : IChannel
     {
-        private string _email;
+        private readonly string _email;
         private readonly EmailAdaptee _adaptee;
 
         public EmailChannel(string email)

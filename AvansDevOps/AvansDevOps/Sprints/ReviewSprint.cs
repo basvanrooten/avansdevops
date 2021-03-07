@@ -52,9 +52,9 @@ namespace AvansDevOps.Sprints
             return _developers;
         }
 
-        public void AddDeveloper(Person developer)
+        public void AddDeveloper(Person person)
         {
-            this._developers.Add(developer);
+            this._developers.Add(person);
         }
 
         public DateTime GetEndDate()
